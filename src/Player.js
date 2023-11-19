@@ -40,14 +40,13 @@ class Player {
       )
       .map((enemy) => {
         enemy.health -= this.strength;
-       
+
         this.hp.style.cssText = `width: ${this.health}%;`;
         if (enemy.health <= 0) {
           enemy.el.className = "tile";
           this.field.enemies.filter((el) => {
             el.el.className !== "tile";
           });
-          enemy.hp.style.ccsText = `width: ${enemy.health}%;`;
         }
 
         this.strength = 50;
