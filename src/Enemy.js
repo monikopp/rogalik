@@ -27,7 +27,7 @@ class Enemy {
       );
     } else {
       player.health -= this.strength;
-      player.hp.style.ccsText = `width: ${player.health}%;`;
+      // player.hp.style.ccsText = `width: ${player.health}%;`;
       if (player.health <= 0) {
         player.el.className = "tile";
         alert("Вы умерли(");

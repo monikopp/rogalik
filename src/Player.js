@@ -40,7 +40,7 @@ class Player {
       )
       .map((enemy) => {
         enemy.health -= this.strength;
-        enemy.hp.style.ccsText = `width: ${enemy.health}%;`;
+       
         this.hp.style.cssText = `width: ${this.health}%;`;
         if (enemy.health <= 0) {
           enemy.el.className = "tile";
