@@ -12,15 +12,9 @@ class Player {
     this.strength = 50;
   }
   renderPlayer() {
-    const { x, y } = this.field.getRandomPosition();
-    this.x = x;
-    this.y = y;
-
-    const spawn = this.field.tiles
-      .flat()
-      .find((tile) => tile.x === this.x && tile.y === this.y);
-    spawn.el.className = "tileP";
-
+    const spawn = this.field.setSpawn("tileP");
+    this.y = spawn.y;
+    this.x = spawn.x;
     const player = document.getElementsByClassName("tileP")[0];
     player.appendChild(this.hp);
   }

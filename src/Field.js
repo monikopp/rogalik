@@ -47,6 +47,15 @@ class Field {
       });
     }
   }
+  setSpawn(className) {
+    const { x, y } = this.getRandomPosition();
+    const spawn = this.tiles
+      .flat()
+      .find((tile) => tile.x === x && tile.y === y);
+    spawn.el.className = className;
+    return spawn;
+  }
+
   renderRandomHallways() {
     const maxAmountOfHalls = 5;
     const minAmountofHalls = 3;

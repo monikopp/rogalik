@@ -7,11 +7,7 @@ class Game {
   }
   renderEnemies() {
     for (let i = 0; i < 10; i++) {
-      const { x, y } = this.field.getRandomPosition();
-      let spawn = this.field.tiles
-        .flat()
-        .find((tile) => tile.x === x && tile.y === y);
-      spawn.el.className = "tileE";
+      const spawn = this.field.setSpawn("tileE");
       spawn.health = 100;
 
       this.field.enemies.push(

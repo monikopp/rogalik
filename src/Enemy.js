@@ -27,7 +27,7 @@ class Enemy {
       player.hp.setAttribute("style", `width: ${player.health}%;`);
 
       if (player.health <= 0) {
-        player.hp.style.ccsText = `width: ${player.health}%;`;
+        player.hp.setAttribute("style", `width: ${player.health}%;`);
         player.el.className = "tile";
 
         alert("Вы умерли(");
