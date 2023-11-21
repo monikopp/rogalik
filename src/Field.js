@@ -46,7 +46,6 @@ class Field {
         field.appendChild(tile.el);
       });
     }
-    console.log(this);
   }
   renderRandomHallways() {
     const maxAmountOfHalls = 5;

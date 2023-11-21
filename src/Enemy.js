@@ -12,7 +12,7 @@ class Enemy {
 
   attack(player) {
     let tmap = this.field.tiles.flat();
-    // player.hp.style.ccsText = `width: ${player.health}%;`;
+
     let currentPosition = tmap.find(
       (tile) => tile.x === this.x && this.y === tile.y
     );
@@ -26,7 +26,6 @@ class Enemy {
       player.health -= this.strength;
       player.hp.setAttribute("style", `width: ${player.health}%;`);
 
-      console.log(player.hp, player.health);
       if (player.health <= 0) {
         player.hp.style.ccsText = `width: ${player.health}%;`;
         player.el.className = "tile";
