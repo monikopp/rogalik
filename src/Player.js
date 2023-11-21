@@ -63,13 +63,14 @@ class Player {
       this.strength = 100;
     }
   }
+  getCurrentPosition(tmap) {
+    return tmap.find((tile) => tile.x === this.x && this.y === tile.y);
+  }
   moveUp() {
     if (this.y > 0 && this.canMove(this.y - 1, this.x)) {
       this.y--;
       const tmap = this.field.tiles.flat();
-      const currentPosition = tmap.find(
-        (tile) => tile.x === this.x && this.y === tile.y
-      );
+      const currentPosition = this.getCurrentPosition(tmap);
       const prevPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y - 1
       );
@@ -86,9 +87,7 @@ class Player {
     if (this.y < this.field.row - 1 && this.canMove(this.y + 1, this.x)) {
       this.y++;
       const tmap = this.field.tiles.flat();
-      const currentPosition = tmap.find(
-        (tile) => tile.x === this.x && this.y === tile.y
-      );
+      const currentPosition = this.getCurrentPosition(tmap);
       const prevPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y + 1
       );
@@ -105,9 +104,7 @@ class Player {
       this.x--;
 
       const tmap = this.field.tiles.flat();
-      const currentPosition = tmap.find(
-        (tile) => tile.x === this.x && this.y === tile.y
-      );
+      const currentPosition = this.getCurrentPosition(tmap);
       const prevPosition = tmap.find(
         (tile) => tile.x - 1 === this.x && this.y === tile.y
       );
@@ -123,9 +120,7 @@ class Player {
     if (this.x < this.field.column - 1 && this.canMove(this.y, this.x + 1)) {
       this.x++;
       const tmap = this.field.tiles.flat();
-      const currentPosition = tmap.find(
-        (tile) => tile.x === this.x && this.y === tile.y
-      );
+      const currentPosition = this.getCurrentPosition(tmap);
       const prevPosition = tmap.find(
         (tile) => tile.x + 1 === this.x && this.y === tile.y
       );

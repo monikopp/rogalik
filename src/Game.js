@@ -39,7 +39,7 @@ class Game {
     this.renderEnemies();
     this.tools.renderTools();
 
-    document.addEventListener("keydown", (event) => {
+    document.addEventListener("keyup", (event) => {
       switch (event.code) {
         case "KeyW":
           this.player.moveUp();
