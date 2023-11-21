@@ -16,12 +16,12 @@ class Player {
     this.x = x;
     this.y = y;
 
-    let spawn = this.field.tiles
+    const spawn = this.field.tiles
       .flat()
       .find((tile) => tile.x === this.x && tile.y === this.y);
     spawn.el.className = "tileP";
 
-    let player = document.getElementsByClassName("tileP")[0];
+    const player = document.getElementsByClassName("tileP")[0];
     player.appendChild(this.hp);
   }
 
@@ -66,11 +66,11 @@ class Player {
   moveUp() {
     if (this.y > 0 && this.canMove(this.y - 1, this.x)) {
       this.y--;
-      let tmap = this.field.tiles.flat();
-      let currentPosition = tmap.find(
+      const tmap = this.field.tiles.flat();
+      const currentPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y
       );
-      let prevPosition = tmap.find(
+      const prevPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y - 1
       );
       this.checkForTools(this.y, this.x);
@@ -78,25 +78,25 @@ class Player {
       prevPosition.el.className = "tile";
       currentPosition.el.className = "tileP";
 
-      let player = document.getElementsByClassName("tileP")[0];
+      const player = document.getElementsByClassName("tileP")[0];
       player.appendChild(this.hp);
     }
   }
   moveDown() {
     if (this.y < this.field.row - 1 && this.canMove(this.y + 1, this.x)) {
       this.y++;
-      let tmap = this.field.tiles.flat();
-      let currentPosition = tmap.find(
+      const tmap = this.field.tiles.flat();
+      const currentPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y
       );
-      let prevPosition = tmap.find(
+      const prevPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y + 1
       );
       this.checkForTools(this.y, this.x);
 
       prevPosition.el.className = "tile";
       currentPosition.el.className = "tileP";
-      let player = document.getElementsByClassName("tileP")[0];
+      const player = document.getElementsByClassName("tileP")[0];
       player.appendChild(this.hp);
     }
   }
@@ -104,36 +104,36 @@ class Player {
     if (this.x > 0 && this.canMove(this.y, this.x - 1)) {
       this.x--;
 
-      let tmap = this.field.tiles.flat();
-      let currentPosition = tmap.find(
+      const tmap = this.field.tiles.flat();
+      const currentPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y
       );
-      let prevPosition = tmap.find(
+      const prevPosition = tmap.find(
         (tile) => tile.x - 1 === this.x && this.y === tile.y
       );
 
       this.checkForTools(this.y, this.x);
       prevPosition.el.className = "tile";
       currentPosition.el.className = "tileP";
-      let player = document.getElementsByClassName("tileP")[0];
+      const player = document.getElementsByClassName("tileP")[0];
       player.appendChild(this.hp);
     }
   }
   moveRight() {
     if (this.x < this.field.column - 1 && this.canMove(this.y, this.x + 1)) {
       this.x++;
-      let tmap = this.field.tiles.flat();
-      let currentPosition = tmap.find(
+      const tmap = this.field.tiles.flat();
+      const currentPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y
       );
-      let prevPosition = tmap.find(
+      const prevPosition = tmap.find(
         (tile) => tile.x + 1 === this.x && this.y === tile.y
       );
 
       this.checkForTools(this.y, this.x);
       prevPosition.el.className = "tile";
       currentPosition.el.className = "tileP";
-      let player = document.getElementsByClassName("tileP")[0];
+      const player = document.getElementsByClassName("tileP")[0];
       player.appendChild(this.hp);
     }
   }

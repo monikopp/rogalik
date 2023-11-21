@@ -11,9 +11,9 @@ class Enemy {
   }
 
   attack(player) {
-    let tmap = this.field.tiles.flat();
+    const tmap = this.field.tiles.flat();
 
-    let currentPosition = tmap.find(
+    const currentPosition = tmap.find(
       (tile) => tile.x === this.x && this.y === tile.y
     );
     if (this.health <= 0) {
@@ -38,7 +38,7 @@ class Enemy {
   }
   randomMove() {
     const directions = 4;
-    let randomDirection = Math.floor(Math.random() * directions);
+    const randomDirection = Math.floor(Math.random() * directions);
     if (randomDirection === 0) {
       this.moveUp();
     }
@@ -66,11 +66,11 @@ class Enemy {
   moveUp() {
     if (this.y > 0 && this.canMove(this.y - 1, this.x)) {
       this.y--;
-      let tmap = this.field.tiles.flat();
-      let currentPosition = tmap.find(
+      const tmap = this.field.tiles.flat();
+      const currentPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y
       );
-      let prevPosition = tmap.find(
+      const prevPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y - 1
       );
 
@@ -84,11 +84,11 @@ class Enemy {
   moveDown() {
     if (this.y < this.field.row - 1 && this.canMove(this.y + 1, this.x)) {
       this.y++;
-      let tmap = this.field.tiles.flat();
-      let currentPosition = tmap.find(
+      const tmap = this.field.tiles.flat();
+      const currentPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y
       );
-      let prevPosition = tmap.find(
+      const prevPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y + 1
       );
 
@@ -102,11 +102,11 @@ class Enemy {
   moveLeft() {
     if (this.x > 0 && this.canMove(this.y, this.x - 1)) {
       this.x--;
-      let tmap = this.field.tiles.flat();
-      let currentPosition = tmap.find(
+      const tmap = this.field.tiles.flat();
+      const currentPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y
       );
-      let prevPosition = tmap.find(
+      const prevPosition = tmap.find(
         (tile) => tile.x - 1 === this.x && this.y === tile.y
       );
 
@@ -120,11 +120,11 @@ class Enemy {
   moveRight() {
     if (this.x < this.field.column - 1 && this.canMove(this.y, this.x + 1)) {
       this.x++;
-      let tmap = this.field.tiles.flat();
-      let currentPosition = tmap.find(
+      const tmap = this.field.tiles.flat();
+      const currentPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y
       );
-      let prevPosition = tmap.find(
+      const prevPosition = tmap.find(
         (tile) => tile.x + 1 === this.x && this.y === tile.y
       );
 

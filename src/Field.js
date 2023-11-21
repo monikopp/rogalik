@@ -50,17 +50,17 @@ class Field {
   renderRandomHallways() {
     const maxAmountOfHalls = 5;
     const minAmountofHalls = 3;
-    let randomNumberForRow =
+    const randomNumberForRow =
       Math.floor(Math.random() * (maxAmountOfHalls - minAmountofHalls)) +
       minAmountofHalls;
 
-    let randomNumberForColumn =
+    const randomNumberForColumn =
       Math.floor(Math.random() * (maxAmountOfHalls - minAmountofHalls)) +
       minAmountofHalls;
 
-    let randomRowArr = Array.from(Array(this.row).keys());
+    const randomRowArr = Array.from(Array(this.row).keys());
 
-    let randomColumnArr = Array.from(Array(this.column).keys());
+    const randomColumnArr = Array.from(Array(this.column).keys());
 
     for (let i = 0; i < randomNumberForRow; i++) {
       const randomRow =
