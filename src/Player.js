@@ -12,13 +12,9 @@ class Player {
     this.strength = 50;
   }
   renderPlayer() {
-    let floor = this.field.tiles
-      .flat()
-      .filter((tile) => tile.el.className === "tile");
-
-    let randomStartPosition = Math.floor(Math.random() * floor.length);
-    this.x = floor[randomStartPosition].x;
-    this.y = floor[randomStartPosition].y;
+    const { x, y } = this.field.getRandomPosition();
+    this.x = x;
+    this.y = y;
 
     let spawn = this.field.tiles
       .flat()
@@ -52,13 +48,23 @@ class Player {
         this.strength = 50;
       });
   }
-
+  canMove(y, x) {
+    return (
+      this.field.tiles[y][x].el.className !== "tileW" &&
+      this.field.tiles[y][x].el.className !== "tileE"
+    );
+  }
+  checkForTools(y, x) {
+    if (this.field.tiles[y][x].el.className === "tileHP") {
+      this.health = 100;
+      this.hp.style.cssText = `width: ${this.health}%;`;
+    }
+    if (this.field.tiles[y][x].el.className === "tileSW") {
+      this.strength = 100;
+    }
+  }
   moveUp() {
-    if (
-      this.y > 0 &&
-      this.field.tiles[this.y - 1][this.x].el.className !== "tileW" &&
-      this.field.tiles[this.y - 1][this.x].el.className !== "tileE"
-    ) {
+    if (this.y > 0 && this.canMove(this.y - 1, this.x)) {
       this.y--;
       let tmap = this.field.tiles.flat();
       let currentPosition = tmap.find(
@@ -67,13 +73,8 @@ class Player {
       let prevPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y - 1
       );
-      if (this.field.tiles[this.y][this.x].el.className === "tileHP") {
-        this.health = 100;
-        this.hp.style.cssText = `width: ${this.health}%;`;
-      }
-      if (this.field.tiles[this.y][this.x].el.className === "tileSW") {
-        this.strength = 100;
-      }
+      this.checkForTools(this.y, this.x);
+
       prevPosition.el.className = "tile";
       currentPosition.el.className = "tileP";
 
@@ -82,13 +83,8 @@ class Player {
     }
   }
   moveDown() {
-    if (
-      this.y < 23 &&
-      this.field.tiles[this.y + 1][this.x].el.className !== "tileW" &&
-      this.field.tiles[this.y + 1][this.x].el.className !== "tileE"
-    ) {
+    if (this.y < this.field.row - 1 && this.canMove(this.y + 1, this.x)) {
       this.y++;
-
       let tmap = this.field.tiles.flat();
       let currentPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y
@@ -96,13 +92,8 @@ class Player {
       let prevPosition = tmap.find(
         (tile) => tile.x === this.x && this.y === tile.y + 1
       );
-      if (this.field.tiles[this.y][this.x].el.className === "tileHP") {
-        this.health = 100;
-        this.hp.style.cssText = `width: ${this.health}%;`;
-      }
-      if (this.field.tiles[this.y][this.x].el.className === "tileSW") {
-        this.strength += 50;
-      }
+      this.checkForTools(this.y, this.x);
+
       prevPosition.el.className = "tile";
       currentPosition.el.className = "tileP";
       let player = document.getElementsByClassName("tileP")[0];
@@ -110,11 +101,7 @@ class Player {
     }
   }
   moveLeft() {
-    if (
-      this.x > 0 &&
-      this.field.tiles[this.y][this.x - 1].el.className !== "tileW" &&
-      this.field.tiles[this.y][this.x - 1].el.className !== "tileE"
-    ) {
+    if (this.x > 0 && this.canMove(this.y, this.x - 1)) {
       this.x--;
 
       let tmap = this.field.tiles.flat();
@@ -124,13 +111,8 @@ class Player {
       let prevPosition = tmap.find(
         (tile) => tile.x - 1 === this.x && this.y === tile.y
       );
-      if (this.field.tiles[this.y][this.x].el.className === "tileHP") {
-        this.health = 100;
-        this.hp.style.cssText = `width: ${this.health}%;`;
-      }
-      if (this.field.tiles[this.y][this.x].el.className === "tileSW") {
-        this.strength = 100;
-      }
+
+      this.checkForTools(this.y, this.x);
       prevPosition.el.className = "tile";
       currentPosition.el.className = "tileP";
       let player = document.getElementsByClassName("tileP")[0];
@@ -138,11 +120,7 @@ class Player {
     }
   }
   moveRight() {
-    if (
-      this.x < 39 &&
-      this.field.tiles[this.y][this.x + 1].el.className !== "tileW" &&
-      this.field.tiles[this.y][this.x + 1].el.className !== "tileE"
-    ) {
+    if (this.x < this.field.column - 1 && this.canMove(this.y, this.x + 1)) {
       this.x++;
       let tmap = this.field.tiles.flat();
       let currentPosition = tmap.find(
@@ -151,13 +129,8 @@ class Player {
       let prevPosition = tmap.find(
         (tile) => tile.x + 1 === this.x && this.y === tile.y
       );
-      if (this.field.tiles[this.y][this.x].el.className === "tileHP") {
-        this.health = 100;
-        this.hp.style.cssText = `width: ${this.health}%;`;
-      }
-      if (this.field.tiles[this.y][this.x].el.className === "tileSW") {
-        this.strength = 100;
-      }
+
+      this.checkForTools(this.y, this.x);
       prevPosition.el.className = "tile";
       currentPosition.el.className = "tileP";
       let player = document.getElementsByClassName("tileP")[0];

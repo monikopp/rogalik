@@ -15,32 +15,53 @@ class Field {
     this.tiles = [];
     this.enemies = [];
   }
+
+  get floor() {
+    return this.tiles.flat().filter((tile) => tile.el.className === "tile");
+  }
+
+  getRandomPosition() {
+    const floor = this.floor;
+
+    const randomPosition = Math.floor(Math.random() * floor.length);
+    const { x, y } = floor[randomPosition];
+
+    return { x, y };
+  }
+
   renderField() {
     const field = document.getElementsByClassName("field")[0];
     let tmap = [];
-    for (let j = 0; j < this.column; j++) {
-      for (let i = 0; i < this.row; i++) {
-        const tile = new Tile({ x: i, y: j });
+    for (let i = 0; i < this.row; i++) {
+      for (let j = 0; j < this.column; j++) {
+        const tile = new Tile({ x: j, y: i });
         tmap.push(tile);
       }
     }
-    for (let t = 0; t < tmap.length; t = t + 40) {
-      const rows = tmap.slice(t, t + 40);
-      this.tiles.push(rows);
+    for (let t = 0; t < tmap.length; t = t + this.column) {
+      const row = tmap.slice(t, t + this.column);
+      this.tiles.push(row);
 
-      rows.forEach((tile) => {
+      row.forEach((tile) => {
         field.appendChild(tile.el);
       });
     }
+    console.log(this);
   }
   renderRandomHallways() {
-    let randomNumberForRow = Math.floor(Math.random() * (5 - 3)) + 3;
+    const maxAmountOfHalls = 5;
+    const minAmountofHalls = 3;
+    let randomNumberForRow =
+      Math.floor(Math.random() * (maxAmountOfHalls - minAmountofHalls)) +
+      minAmountofHalls;
 
-    let randomNumberForColumn = Math.floor(Math.random() * (5 - 3)) + 3;
+    let randomNumberForColumn =
+      Math.floor(Math.random() * (maxAmountOfHalls - minAmountofHalls)) +
+      minAmountofHalls;
 
-    let randomRowArr = Array.from(Array(24).keys());
+    let randomRowArr = Array.from(Array(this.row).keys());
 
-    let randomColumnArr = Array.from(Array(40).keys());
+    let randomColumnArr = Array.from(Array(this.column).keys());
 
     for (let i = 0; i < randomNumberForRow; i++) {
       const randomRow =
@@ -75,24 +96,29 @@ class Field {
   }
 
   renderRandomRoom() {
-    const randomNumberOfRooms = Math.floor(Math.random() * (10 - 5)) + 5;
-
+    const maxAmountOfRooms = 10;
+    const minAmountOfRooms = 5;
+    const randomNumberOfRooms =
+      Math.floor(Math.random() * (maxAmountOfRooms - minAmountOfRooms)) +
+      minAmountOfRooms;
+    const maxSize = 8;
+    const minSize = 3;
     let roomsArr = [];
     const randomRoom = () => {
       let room = [];
-      let randomX = Math.floor(Math.random() * 24);
-      let randomY = Math.floor(Math.random() * 40);
-      let width = Math.floor(Math.random() * (8 - 3)) + 3;
-      let height = Math.floor(Math.random() * (8 - 3)) + 3;
+      let randomY = Math.floor(Math.random() * this.row);
+      let randomX = Math.floor(Math.random() * this.column);
+      let width = Math.floor(Math.random() * (maxSize - minSize)) + minSize;
+      let height = Math.floor(Math.random() * (maxSize - minSize)) + minSize;
 
       for (let m = 0; m < height; m++) {
         for (let j = 0; j < width; j++) {
-          const tile = new Tile({ x: randomX + j, y: randomY });
+          const tile = new Tile({ x: randomY + j, y: randomX });
           tile.el.className = "tile";
           room.push(tile);
         }
 
-        randomY += 1;
+        randomX += 1;
       }
 
       if (
@@ -118,12 +144,12 @@ class Field {
     }
 
     roomsArr.flat().forEach((tile) => {
-      const ok = this.tiles
+      const rooms = this.tiles
         .flat()
-        .find((kletka) => kletka.x === tile.x && kletka.y === tile.y);
+        .find((rTile) => rTile.x === tile.x && rTile.y === tile.y);
 
-      if (ok) {
-        ok.el.className = "tile";
+      if (rooms) {
+        rooms.el.className = "tile";
       }
     });
   }

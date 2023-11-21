@@ -8,14 +8,11 @@ class Enemy {
     this.strength = 25;
     this.x = x;
     this.y = y;
-    // this.hp = document.createElement("div");
-    // this.hp.className = "health";
-    // this.hp.style.cssText = `width: ${this.health}%;`;
-    // this.el.append(this.hp);
   }
 
   attack(player) {
     let tmap = this.field.tiles.flat();
+    // player.hp.style.ccsText = `width: ${player.health}%;`;
     let currentPosition = tmap.find(
       (tile) => tile.x === this.x && this.y === tile.y
     );
@@ -27,9 +24,13 @@ class Enemy {
       );
     } else {
       player.health -= this.strength;
-      // player.hp.style.ccsText = `width: ${player.health}%;`;
+      player.hp.setAttribute("style", `width: ${player.health}%;`);
+
+      console.log(player.hp, player.health);
       if (player.health <= 0) {
+        player.hp.style.ccsText = `width: ${player.health}%;`;
         player.el.className = "tile";
+
         alert("Вы умерли(");
 
         window.location.reload();
@@ -37,7 +38,8 @@ class Enemy {
     }
   }
   randomMove() {
-    let randomDirection = Math.floor(Math.random() * 4);
+    const directions = 4;
+    let randomDirection = Math.floor(Math.random() * directions);
     if (randomDirection === 0) {
       this.moveUp();
     }
@@ -52,15 +54,18 @@ class Enemy {
     }
   }
 
+  canMove(y, x) {
+    return (
+      this.field.tiles[y][x].el.className !== "tileW" &&
+      this.field.tiles[y][x].el.className !== "tileP" &&
+      this.field.tiles[y][x].el.className !== "tileE" &&
+      this.field.tiles[y][x].el.className !== "tileHP" &&
+      this.field.tiles[y][x].el.className !== "tileSW"
+    );
+  }
+
   moveUp() {
-    if (
-      this.y > 0 &&
-      this.field.tiles[this.y - 1][this.x].el.className !== "tileW" &&
-      this.field.tiles[this.y - 1][this.x].el.className !== "tileP" &&
-      this.field.tiles[this.y - 1][this.x].el.className !== "tileE" &&
-      this.field.tiles[this.y - 1][this.x].el.className !== "tileHP" &&
-      this.field.tiles[this.y - 1][this.x].el.className !== "tileSW"
-    ) {
+    if (this.y > 0 && this.canMove(this.y - 1, this.x)) {
       this.y--;
       let tmap = this.field.tiles.flat();
       let currentPosition = tmap.find(
@@ -78,14 +83,7 @@ class Enemy {
     }
   }
   moveDown() {
-    if (
-      this.y < 23 &&
-      this.field.tiles[this.y + 1][this.x].el.className !== "tileW" &&
-      this.field.tiles[this.y + 1][this.x].el.className !== "tileP" &&
-      this.field.tiles[this.y + 1][this.x].el.className !== "tileE" &&
-      this.field.tiles[this.y + 1][this.x].el.className !== "tileHP" &&
-      this.field.tiles[this.y + 1][this.x].el.className !== "tileSW"
-    ) {
+    if (this.y < this.field.row - 1 && this.canMove(this.y + 1, this.x)) {
       this.y++;
       let tmap = this.field.tiles.flat();
       let currentPosition = tmap.find(
@@ -103,14 +101,7 @@ class Enemy {
     }
   }
   moveLeft() {
-    if (
-      this.x > 0 &&
-      this.field.tiles[this.y][this.x - 1].el.className !== "tileW" &&
-      this.field.tiles[this.y][this.x - 1].el.className !== "tileP" &&
-      this.field.tiles[this.y][this.x - 1].el.className !== "tileE" &&
-      this.field.tiles[this.y][this.x - 1].el.className !== "tileHP" &&
-      this.field.tiles[this.y][this.x - 1].el.className !== "tileSW"
-    ) {
+    if (this.x > 0 && this.canMove(this.y, this.x - 1)) {
       this.x--;
       let tmap = this.field.tiles.flat();
       let currentPosition = tmap.find(
@@ -128,14 +119,7 @@ class Enemy {
     }
   }
   moveRight() {
-    if (
-      this.x < 39 &&
-      this.field.tiles[this.y][this.x + 1].el.className !== "tileW" &&
-      this.field.tiles[this.y][this.x + 1].el.className !== "tileP" &&
-      this.field.tiles[this.y][this.x + 1].el.className !== "tileE" &&
-      this.field.tiles[this.y][this.x + 1].el.className !== "tileHP" &&
-      this.field.tiles[this.y][this.x + 1].el.className !== "tileSW"
-    ) {
+    if (this.x < this.field.column - 1 && this.canMove(this.y, this.x + 1)) {
       this.x++;
       let tmap = this.field.tiles.flat();
       let currentPosition = tmap.find(
@@ -151,8 +135,5 @@ class Enemy {
     } else {
       this.randomMove();
     }
-  }
-  die() {
-    this.el.className === "tile";
   }
 }

@@ -4,28 +4,20 @@ class Tools {
     this.el = document.createElement("div");
   }
   renderTools() {
-    for (let i = 0; i < 2; i++) {
-      let floor = this.field.tiles
-        .flat()
-        .filter((tile) => tile.el.className === "tile");
-      let randomPosition = Math.floor(Math.random() * floor.length);
-      this.x = floor[randomPosition].x;
-      this.y = floor[randomPosition].y;
+    const amountOfSwords = 2;
+    const amountOfHealthPacks = 10;
+    for (let i = 0; i < amountOfSwords; i++) {
+      const { x, y } = this.field.getRandomPosition();
       let spawn = this.field.tiles
         .flat()
-        .find((tile) => tile.x === this.x && tile.y === this.y);
+        .find((tile) => tile.x === x && tile.y === y);
       spawn.el.className = "tileSW";
     }
-    for (let i = 0; i < 10; i++) {
-      let floor = this.field.tiles
-        .flat()
-        .filter((tile) => tile.el.className === "tile");
-      let randomPosition = Math.floor(Math.random() * floor.length);
-      this.x = floor[randomPosition].x;
-      this.y = floor[randomPosition].y;
+    for (let i = 0; i < amountOfHealthPacks; i++) {
+      const { x, y } = this.field.getRandomPosition();
       let spawn = this.field.tiles
         .flat()
-        .find((tile) => tile.x === this.x && tile.y === this.y);
+        .find((tile) => tile.x === x && tile.y === y);
       spawn.el.className = "tileHP";
     }
   }
